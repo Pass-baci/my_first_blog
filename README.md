@@ -1,2 +1,2 @@
-# ginblog
-my-ginblog
+# my-first-blog
+
