@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-const Url = 'http://localhost:3030/api/v1/'
+const Url = 'https://mzqcgc.cn/api/v1/'
 
 axios.defaults.baseURL = Url
 

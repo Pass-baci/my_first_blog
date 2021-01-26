@@ -15,24 +15,21 @@
                     <a-input type="textarea" v-model="artInfo.desc"></a-input>
                 </a-form-model-item>
                 <a-form-model-item label="文章缩略图" prop="img">
-                  <a-upload
-                    listType="picture"
-                    :defaultFileList="fileList"
-                    name="file"
-                    :action="upUrl"
-                    :headers="headers"
-                    @change="upChange"
-                  >
-                    <a-button>
-                      <a-icon type="upload" />点击上传
-                    </a-button>
-                    <br/>
-                    <br/>
-                    <template v-show="id">
-                      <img :src="artInfo.img" style="width:120px;height:100px" />
-                    </template>
-                  </a-upload>
-                </a-form-model-item>
+              <a-upload
+                listType="picture"
+                :defaultFileList="fileList"
+                name="file"
+                :action="upUrl"
+                :headers="headers"
+                @change="upChange"
+              >
+                <a-button> <a-icon type="upload" />点击上传 </a-button>
+
+                <template v-if="id">
+                  <img :src="artInfo.img" style="width: 120px; height: 100px; margin-left: 15px" />
+                </template>
+              </a-upload>
+            </a-form-model-item>
                 <a-form-model-item label="文章内容" prop="Content">
                     <Editor style="margin: 0; padding: 0" v-model="artInfo.content"></Editor>
                 </a-form-model-item>
@@ -132,20 +129,20 @@ export default {
         if (!valid) return this.$message.error('参数验证未通过，请按要求录入文章')
         if (id === 0) {
           const { data: res } = await this.$http.post('article/add', this.artInfo)
-          if (res.status !== 200) return this.$message.console.error(res.message)
-          this.$router.push('/admin/artlist')
+          if (res.status !== 200) return this.$message.error(res.message)
+          this.$router.push('/artlist')
           this.$message.success('添加文章成功')
         } else {
           const { data: res } = await this.$http.put(`article/${id}`, this.artInfo)
-          if (res.status !== 200) return this.$message.console.error(res.message)
-          this.$router.push('/admin/artlist')
+          if (res.status !== 200) return this.$message.error(res.message)
+          this.$router.push('/artlist')
           this.$message.success('更新文章成功')
         }
       })
     },
     addcancle () {
       this.$refs.artInfoRef.resetFields()
-      this.$router.push('/admin/artlist')
+      this.$router.push('/artlist')
     }
   }
 }

@@ -4,7 +4,7 @@
             <p>本页面暂无内容，内容正在更新，点击下方按钮进入文章列表</p>
         </div>
         <div class="btu">
-            <a-button @click="$router.push('/admin/artlist')">文章列表</a-button>
+            <a-button @click="$router.push('artlist')">文章列表</a-button>
         </div>
     </div>
 </template>

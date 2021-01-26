@@ -18,11 +18,16 @@
                 </a-form-model-item>
             </a-form-model>
         </div>
+        <div class="Foot">
+          <Footer></Footer>
+        </div>
     </div>
 </template>
 
 <script>
+import Footer from '../components/admin/Footer'
 export default {
+  components: { Footer },
   data () {
     return {
       formdata: {
@@ -51,7 +56,7 @@ export default {
         const { data: res } = await this.$http.post('login', this.formdata)
         if (res.status !== 200) return this.$message.error(res.message)
         window.sessionStorage.setItem('token', res.token)
-        this.$router.push('admin/Index')
+        this.$router.push('Index')
       })
     }
   }
@@ -87,5 +92,10 @@ export default {
 .loginBtn {
     padding: 0 10px;
     float: right;
+}
+.Foot {
+  width: 100%;
+  position: absolute;
+  bottom: 0.5%;
 }
 </style>

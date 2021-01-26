@@ -7,14 +7,14 @@
                     <a-input-search v-model="arttitle" placeholder="输入文章标题进行查找" style="width: 100%" @search="getArtList" allowClear />
                 </a-col>
                 <a-col :span="3">
-                    <a-button type="primary" @click="$router.push('/admin/addart1')" style="margin-left:8%;">新增文章</a-button>
+                    <a-button type="primary" @click="$router.push('/addart1')" style="margin-left:8%;">新增文章</a-button>
                 </a-col>
             </a-row>
             <a-table rowKey="ID" :columns="columns" :pagination='paginationOption' :dataSource="artlist" bordered>
                 <span slot="CreatedAt" slot-scope="CreatedAt">{{ CreatedAt.substr(0,10) }}</span>
                 <template slot="action" slot-scope="data">
                     <div class="actionSlot">
-                        <a-button type="primary" style="margin-right: 15px" @click="$router.push(`/admin/addart/${data.ID}`)">编辑</a-button>
+                        <a-button type="primary" style="margin-right: 15px" @click="$router.push(`addart/${data.ID}`)">编辑</a-button>
                         <a-button type="danger" @click="deleteArt(data.ID)">删除</a-button>
                     </div>
                 </template>
