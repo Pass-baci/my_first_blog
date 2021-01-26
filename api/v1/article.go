@@ -40,7 +40,7 @@ func SelectArticle(c *gin.Context) {
 	if pageNum == 0 {
 		pageNum = -1
 	}
-	code, data, total := module.GetArticles(artname,pageSize,pageNum)
+	data, code, total := module.GetArticles(artname,pageSize,pageNum)
 	c.JSON(http.StatusOK,gin.H{
 		"status": code,
 		"data":data,
