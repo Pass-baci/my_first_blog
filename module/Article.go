@@ -25,27 +25,41 @@ func CreateArticle(data *Article) (code int) {
 }
 
 //GetArticles 查询文章列表
-func GetArticles(artname string, pageSize, pageNum int)(code int, article []Article, total int) {
+func GetArticles(artname string, pageSize, pageNum int)(article []Article, code int, total int) {
+	var articleList []Article
+	var err error
+
 	if artname == "" {
-		db.Preload("Category").Order("Updated_At desc").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&article).Count(&total)
-		code = errmsg.SUCCESS
-	} else {
-		err := db.Preload("Category").Where("title Like ?", "%"+artname+"%").Order("Updated_At desc").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&article).Count(&total).Error
-		if err != nil && err != gorm.ErrRecordNotFound {
-			code = errmsg.ERROR
-			return code, nil, 0
+		err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Order("Created_At DESC").Preload("Category").Find(&articleList).Error
+		// 单独计数
+		db.Model(&articleList).Count(&total)
+		if err != nil {
+			return nil, errmsg.ERROR, 0
 		}
+		return articleList, errmsg.SUCCESS, total
 	}
-	return code, article, total
+	err = db.Limit(pageSize).Offset((pageNum-1)*pageSize).Order("Created_At DESC").Preload("Category").Where("title LIKE ?",
+		"%"+artname+"%",
+	).Find(&articleList).Error
+	// 单独计数
+	db.Model(&articleList).Where("title LIKE ?", "%"+artname+"%").Count(&total)
+
+	if err != nil {
+		return nil, errmsg.ERROR, 0
+	}
+	return articleList, errmsg.SUCCESS, total
 }
 
 //GetCateArticle 查询分类下的所有文章
 func GetCateArticle(id, pageSize, pageNum int) (articles []Article, code int, total int) {
-	err = db.Preload("Category").Limit(pageSize).Offset((pageNum - 1) * pageSize).Where("cid = ?", id).Find(&articles).Count(&total).Error
+	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Order("Created_At DESC").Preload("Category").Where("cid = ?", id).Find(&articles).Error
+	// 单独计数
+	db.Model(&articles).Where("cid = ?", id).Count(&total)
 	if err != nil {
-		return nil, errmsg.ERROR_CATEGORY_NOT_EXIST, 0
+		return nil, errmsg.ERROR, 0
 	}
 	return articles, errmsg.SUCCESS, total
+
 }
 
 //GetArt 查询单个文章
