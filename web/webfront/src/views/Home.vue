@@ -1,4 +1,5 @@
 <template>
+<div class="main">
  <v-app app>
     <TopBar></TopBar>
 
@@ -6,7 +7,7 @@
       <v-container>
         <v-row>
           <v-col>
-            <v-sheet max-width="62vw" min-height="80vh" rounded="lg">
+            <v-sheet max-width="92vw" min-height="80vh" rounded="lg">
               <router-view :key="$route.path"></router-view>
             </v-sheet>
           </v-col>
@@ -19,6 +20,7 @@
 
     <Footer></Footer>
   </v-app>
+</div>
 </template>
 
 <script>
@@ -29,3 +31,9 @@ export default {
   components: { TopBar, Footer, Nav }
 }
 </script>
+
+<style scoped>
+.main {
+  min-width: 1080px;
+}
+</style>

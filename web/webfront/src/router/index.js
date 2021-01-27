@@ -6,7 +6,6 @@ const ArticleList = () => import('../components/ArticleList.vue')
 const Detail = () => import('../components/Details.vue')
 const Category = () => import('../components/CateList.vue')
 const Search = () => import('../components/Search.vue')
-const Fileauth = () => import('../components/fileauth.vue')
 
 Vue.use(VueRouter)
 
@@ -24,7 +23,6 @@ const routes = [
     meta: { title: '欢迎来到Paradise' },
     children: [
       { path: '/', component: ArticleList, meta: { title: '欢迎来到Paradise' } },
-      { path: '.well-known/pki-validation/fileauth.txt', component: Fileauth },
       {
         path: 'detail/:id',
         component: Detail,
@@ -48,7 +46,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes
 })

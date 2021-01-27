@@ -30,7 +30,6 @@
     </v-card>
     <div class="text-center">
       <v-pagination
-        color="indigo"
         total-visible="7"
         v-model="queryParam.pagenum"
         :length="Math.ceil(total/queryParam.pagesize)"

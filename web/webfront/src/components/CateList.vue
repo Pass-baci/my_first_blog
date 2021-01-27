@@ -7,19 +7,19 @@
     </div>
     <v-sheet>
       <v-card
-        class="ma-3"
+        class="ma-3 d-flex flex-no-wrap justify-space-between align-center"
         v-for="item in artList"
         :key="item.id"
         link
         @click="$router.push(`/detail/${item.ID}`)"
       >
         <v-row no-gutters class="d-flex align-center">
-          <v-col class="d-flex justify-center align-center ma-3" cols="1">
-            <v-img max-height="100" max-width="100" :src="item.img"></v-img>
-          </v-col>
+        <v-avatar class="ma-3" size="100" tile>
+          <v-img :src="item.img"></v-img>
+        </v-avatar>
           <v-col>
             <v-card-title>
-              <v-chip color="purple" outlined label class="mr-3 white--text">{{item.Category.name}}</v-chip>
+              <v-chip color="blue lighten-2" outlined label class="mr-3 white--text">{{item.Category.name}}</v-chip>
               <div>{{item.title}}</div>
             </v-card-title>
             <v-card-subtitle class="mt-1" v-text="item.desc"></v-card-subtitle>
@@ -79,9 +79,5 @@ export default {
   }
 }
 </script>
-<style scoped>
-.nodate {
-  width: 100%;
-  height: 100%;
-}
+<style lang="">
 </style>
