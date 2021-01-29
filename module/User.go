@@ -3,7 +3,7 @@ package module
 import (
 	"encoding/base64"
 	"ginblog/utils/errmsg"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 	"golang.org/x/crypto/scrypt"
 	"log"
 )
@@ -70,7 +70,7 @@ func CheckLogin(username, password string) (code int) {
 //添加用户
 func CreateUser(data *User) (code int) {
 	data.Password = encryPw(data.Password)
-	err := db.Create(data).Error
+	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
@@ -88,7 +88,7 @@ func GetUser(id int) (User, int)  {
 }
 
 //查询用户列表
-func GetUsers(username string, pageSize, pageNum int)(code int, users []User, total int) {
+func GetUsers(username string, pageSize, pageNum int)(code int, users []User, total int64) {
 	if username == "" {
 		db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Count(&total)
 		code = errmsg.SUCCESS

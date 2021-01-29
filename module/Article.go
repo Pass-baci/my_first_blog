@@ -2,22 +2,22 @@ package module
 
 import (
 	"ginblog/utils/errmsg"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type Article struct {
-	Category Category `gorm:"foreignkey:Cid"`
 	gorm.Model
-	Title string `gorm:"type:varchar(100);not null" json:"title"`
-	Cid int `gorm:"type:int not null" json:"cid"`
-	Desc string `gorm:"type:varchar(100)" json:"desc"`
-	Content string `gorm:"type:longtext not null" json:"content"`
-	Img string `gorm:"type:varchar(100) not null" json:"img"`
+	Category Category `gorm:"foreignkey:Cid"`
+	Title    string   `gorm:"type:varchar(100);not null" json:"title"`
+	Cid      int      `gorm:"type:int not null" json:"cid"`
+	Desc     string   `gorm:"type:varchar(100)" json:"desc"`
+	Content  string   `gorm:"type:longtext not null" json:"content"`
+	Img      string   `gorm:"type:varchar(100) not null" json:"img"`
 }
 
 //CreateArticle 添加文章
 func CreateArticle(data *Article) (code int) {
-	err := db.Preload("Category").Create(data).Error
+	err := db.Preload("Category").Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
@@ -25,8 +25,7 @@ func CreateArticle(data *Article) (code int) {
 }
 
 //GetArticles 查询文章列表
-func GetArticles(artname string, pageSize, pageNum int)(article []Article, code int, total int) {
-	var articleList []Article
+func GetArticles(artname string, pageSize, pageNum int) (articleList []Article, code int, total int64) {
 	var err error
 
 	if artname == "" {
@@ -51,8 +50,8 @@ func GetArticles(artname string, pageSize, pageNum int)(article []Article, code 
 }
 
 //GetCateArticle 查询分类下的所有文章
-func GetCateArticle(id, pageSize, pageNum int) (articles []Article, code int, total int) {
-	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Order("Created_At DESC").Preload("Category").Where("cid = ?", id).Find(&articles).Error
+func GetCateArticle(id, pageSize, pageNum int) (articles []Article, code int, total int64) {
+	err = db.Limit(pageSize).Offset((pageNum-1)*pageSize).Order("Created_At DESC").Preload("Category").Where("cid = ?", id).Find(&articles).Error
 	// 单独计数
 	db.Model(&articles).Where("cid = ?", id).Count(&total)
 	if err != nil {
@@ -75,7 +74,7 @@ func GetArt(id int) (data Article, code int) {
 func EditArticle(id int, data *Article) (code int) {
 	var (
 		maps = make(map[string]interface{})
-		art Article
+		art  Article
 	)
 	maps["title"] = data.Title
 	maps["cid"] = data.Cid

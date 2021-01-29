@@ -1,10 +1,12 @@
 package module
 
 import (
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"fmt"
 	"ginblog/utils"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 	"time"
 )
 
@@ -15,25 +17,41 @@ var (
 
 //InitDataBase 初始化数据库
 func InitDataBase() {
-	db, err = gorm.Open(utils.Db, fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", utils.DbUser, utils.DbPassWord, utils.DbHost, utils.DbPort, utils.DbName))
+	dsn := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", utils.DbUser, utils.DbPassWord, utils.DbHost, utils.DbPort, utils.DbName)
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		// gorm日志模式：silent
+		Logger: logger.Default.LogMode(logger.Silent),
+		// 外键约束
+		DisableForeignKeyConstraintWhenMigrating: true,
+		// 禁用默认事务（提高运行速度）
+		SkipDefaultTransaction: true,
+		NamingStrategy: schema.NamingStrategy{
+			// 使用单数表名，启用该选项，此时，`User` 的表名应该是 `user`
+			SingularTable: true,
+		},
+	} )
 	if err != nil {
 		fmt.Println("连接数据库失败，请重新配置：",err)
 		return
 	}
+	sqlDB, err := db.DB()
+	if err != nil {
+		fmt.Println("连接数据库失败，请重新配置：",err)
+	}
 	// 禁用默认表名的复数形式
-	db.SingularTable(true)
 
-	//AutoMigrate 自动迁移 只会 创建表、缺失的列、缺失的索引
-	db.AutoMigrate(&User{},&Category{},&Article{})
+	////AutoMigrate 自动迁移 只会 创建表、缺失的列、缺失的索引
+	//db.AutoMigrate(&User{},&Category{},&Article{})
+	_ = db.AutoMigrate(&User{}, &Article{}, &Category{})
 
 	// SetMaxIdleCons 设置连接池中的最大闲置连接数。
-	db.DB().SetMaxIdleConns(10)
+	sqlDB.SetMaxIdleConns(10)
 
 	// SetMaxOpenCons 设置数据库的最大连接数量。
-	db.DB().SetMaxOpenConns(100)
+	sqlDB.SetMaxOpenConns(100)
 
 	// SetConnMaxLifetiment 设置连接的最大可复用时间。
-	db.DB().SetConnMaxLifetime(10 * time.Second)
+	sqlDB.SetConnMaxLifetime(10 * time.Second)
 
 	//关闭数据库连接
 	//db.Close()

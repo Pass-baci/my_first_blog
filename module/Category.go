@@ -2,7 +2,7 @@ package module
 
 import (
 	"ginblog/utils/errmsg"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 //Category 定义一个分类
@@ -23,7 +23,7 @@ func CheckCategory(name string) (code int) {
 
 //CreateCategory 添加分类
 func CreateCategory(data *Category) (code int) {
-	err := db.Create(data).Error
+	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
@@ -41,7 +41,7 @@ func GetCate(id int) (category Category, code int) {
 }
 
 //GetCategories 查询分类列表
-func GetCategories(pageSize, pageNum int, catename string)(code int, category []Category, total int) {
+func GetCategories(pageSize, pageNum int, catename string)(code int, category []Category, total int64) {
 	err := db.Where("name Like ?", "%"+catename+"%").Order("ID").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&category).Count(&total).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		code = errmsg.ERROR

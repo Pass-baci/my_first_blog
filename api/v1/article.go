@@ -34,11 +34,14 @@ func SelectArticle(c *gin.Context) {
 	pageSize,_ := strconv.Atoi(c.Query("pagesize"))
 	pageNum,_ := strconv.Atoi(c.Query("pagenum"))
 	artname := c.Query("title")
-	if pageSize == 0 {
-		pageSize =-1
+	switch {
+	case pageSize >= 100:
+			pageSize = 100
+	case pageSize <= 0:
+			pageSize = 10
 	}
 	if pageNum == 0 {
-		pageNum = -1
+		pageNum = 1
 	}
 	data, code, total := module.GetArticles(artname,pageSize,pageNum)
 	c.JSON(http.StatusOK,gin.H{
@@ -54,11 +57,15 @@ func SelectCateArt(c *gin.Context){
 	pageSize,_ := strconv.Atoi(c.Query("pagesize"))
 	pageNum,_ := strconv.Atoi(c.Query("pagenum"))
 	id, _ := strconv.Atoi(c.Param("id"))
-	if pageSize == 0 {
-		pageSize =-1
+	switch {
+	case pageSize >= 100:
+			pageSize = 100
+	case pageSize <= 0:
+			pageSize = 10
 	}
+
 	if pageNum == 0 {
-		pageNum = -1
+		pageNum = 1
 	}
 	data, code, total := module.GetCateArticle(id, pageSize, pageNum)
 	c.JSON(http.StatusOK, gin.H{
