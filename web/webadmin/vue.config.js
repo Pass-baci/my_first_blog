@@ -1,7 +1,4 @@
 module.exports = {
-    devServer: {
-      changeOrigin: true,
-    },
     publicPath: '/admin/',
     outputDir: 'dist',
     // 警告 webpack 的性能提示

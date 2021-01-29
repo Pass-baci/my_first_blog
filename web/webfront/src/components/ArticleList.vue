@@ -13,12 +13,14 @@
 
       <v-col>
         <v-card-title>
-          <v-chip color="blue lighten-2" outlined label class="mr-3 white--text">{{
+          <div class="titleSt mr-2">{{ item.title }}</div>
+          <div>
+          <v-chip color="blue lighten-2" outlined label class=" white--text"  small>{{
             item.Category.name
           }}</v-chip>
-          <div>{{ item.title }}</div>
+          </div>
         </v-card-title>
-        <v-card-subtitle class="mt-1" v-text="item.desc"></v-card-subtitle>
+        <v-card-subtitle class="mt-1 caption" v-text="item.desc"></v-card-subtitle>
         <v-divider class="mx-4"></v-divider>
         <v-card-text class="d-flex align-center">
           <div class="d-flex align-center">
@@ -71,4 +73,11 @@ export default {
 }
 </script>
 <style lang="">
+</style>
+<style scoped>
+.titleSt {
+  font-size: 0.9rem;
+  font: Roboto;
+  font-weight: 600;
+}
 </style>

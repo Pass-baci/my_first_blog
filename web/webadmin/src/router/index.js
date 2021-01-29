@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-const Login = () => import('../views/login.vue')
-const Admin = () => import('../views/admin.vue')
+const Login = () => import(/* webpackChunkName: "Login" */ '../views/login.vue')
+const Admin = () => import(/* webpackChunkName: "Admin" */ '../views/admin.vue')
 
 // 页面路由组件
-const Index = () => import('../components/admin/Index.vue')
-const AddArt = () => import('../components/article/addarticle.vue')
-const ArtList = () => import('../components/article/articlelist.vue')
-const CateList = () => import('../components/category/categorylist.vue')
-const UserList = () => import('../components/user/userlist.vue')
+const Index = () => import(/* webpackChunkName: "Index" */ '../components/admin/Index.vue')
+const AddArt = () => import(/* webpackChunkName: "addarticle" */ '../components/article/addarticle.vue')
+const ArtList = () => import(/* webpackChunkName: "ArtList" */ '../components/article/articlelist.vue')
+const CateList = () => import(/* webpackChunkName: "CateList" */ '../components/category/categorylist.vue')
+const UserList = () => import(/* webpackChunkName: "UserList" */ '../components/user/userlist.vue')
 
 // 路由重复点击捕获错误
 const originalPush = VueRouter.prototype.push

@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // 使用路由懒加载
-const Home = () => import('../views/Home.vue')
-const ArticleList = () => import('../components/ArticleList.vue')
-const Detail = () => import('../components/Details.vue')
-const Category = () => import('../components/CateList.vue')
-const Search = () => import('../components/Search.vue')
+const Home = () => import(/* webpackChunkName: "group-index" */ '../views/Home.vue')
+const ArticleList = () => import(/* webpackChunkName: "group-index" */ '../components/ArticleList.vue')
+const Detail = () => import(/* webpackChunkName: "group-detail" */ '../components/Details.vue')
+const Category = () => import(/* webpackChunkName: "group-category" */ '../components/CateList.vue')
+const Search = () => import(/* webpackChunkName: "group-search" */ '../components/Search.vue')
 
 Vue.use(VueRouter)
 
