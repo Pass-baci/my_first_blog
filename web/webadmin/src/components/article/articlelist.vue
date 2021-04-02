@@ -10,7 +10,7 @@
                     <a-button type="primary" @click="$router.push('/addart1')" style="margin-left:8%;">新增文章</a-button>
                 </a-col>
             </a-row>
-            <a-table rowKey="ID" :columns="columns" :pagination='paginationOption' :dataSource="artlist" bordered>
+            <a-table rowKey="ID" :columns="columns" :dataSource="artlist" bordered>
                 <span slot="CreatedAt" slot-scope="CreatedAt">{{ CreatedAt.substr(0,10) }}</span>
                 <template slot="action" slot-scope="data">
                     <div class="actionSlot">
@@ -66,22 +66,22 @@ const columns = [
 export default {
   data () {
     return {
-      paginationOption: {
-        pagSizeOptions: ['5', '5', '10'],
-        defaultCurrent: 1,
-        defaultPageSize: 10,
-        total: 0,
-        showSizeChanger: true,
-        showTotal: (total) => `共${total}条`,
-        onchage: (page, pageSize) => {
-          this.paginationOption.defaultCurrent = page
-          this.paginationOption.defaultPageSize = pageSize
-        },
-        onshowSizeChange: (current, size) => {
-          this.paginationOption.defaultCurrent = current
-          this.paginationOption.defaultPageSize = size
-        }
-      },
+      // paginationOption: {
+      //   pagSizeOptions: ['5', '5', '10'],
+      //   defaultCurrent: 1,
+      //   defaultPageSize: 10,
+      //   total: 0,
+      //   showSizeChanger: true,
+      //   showTotal: (total) => `共${total}条`,
+      //   onchage: (page, pageSize) => {
+      //     this.paginationOption.defaultCurrent = page
+      //     this.paginationOption.defaultPageSize = pageSize
+      //   },
+      //   onshowSizeChange: (current, size) => {
+      //     this.paginationOption.defaultCurrent = current
+      //     this.paginationOption.defaultPageSize = size
+      //   }
+      // },
       artInfo: {
         id: 0,
         arttitle: '',
@@ -125,14 +125,14 @@ export default {
     async getArtList () {
       const { data: res } = await this.$http.get('article', {
         params: {
-          title: this.arttitle,
-          pageSize: this.paginationOption.defaultPageSize,
-          pagenum: this.paginationOption.defaultCurrent
+          title: this.arttitle
+          // pageSize: this.paginationOption.defaultPageSize,
+          // pagenum: this.paginationOption.defaultCurrent
         }
       })
       if (res.status !== 200) return this.$message.console.error(res.message)
       this.artlist = res.data
-      this.paginationOption.total = res.total
+      // this.paginationOption.total = res.total
     },
     deleteArt (id) {
       this.$confirm({

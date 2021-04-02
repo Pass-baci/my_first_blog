@@ -1,10 +1,10 @@
 <template>
-  <v-card class="mx-auto" max-width="300">
-    <v-img src="../assets/ground.jpg">
+  <v-card class="mx-auto hidden-sm-and-down" max-width="300">
+    <v-img src="https://xx.mzqcgc.cn/ground.jpg">
       <v-card-title>
         <v-col align="center">
           <v-avatar size="130" color="grey">
-            <img src="../assets/logo.png" alt />
+            <img src="https://xx.mzqcgc.cn/logo.png" alt />
           </v-avatar>
         </v-col>
       </v-card-title>

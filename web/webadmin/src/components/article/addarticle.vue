@@ -45,6 +45,7 @@
 <script>
 import { Url } from '../../plugin/http'
 import Editor from '../editor/index'
+import Prism from '../../assets/css/prism'
 export default {
   components: { Editor },
   props: ['id'],
@@ -104,6 +105,9 @@ export default {
       if (res.status !== 200) return this.$message.console.error(res.message)
       this.artInfo = res.data
       this.artInfo.id = res.data.ID
+      this.timer = setTimeout(() => {
+        Prism.highlightAll()
+      }, 0)
     },
     async getCateList () {
       const { data: res } = await this.$http.get('category')

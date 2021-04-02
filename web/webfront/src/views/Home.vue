@@ -6,12 +6,12 @@
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col>
-            <v-sheet max-width="92vw" min-height="80vh" rounded="lg">
+          <v-col cols="12" md="7">
+            <v-sheet min-height="80vh" rounded="lg">
               <router-view :key="$route.path"></router-view>
             </v-sheet>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="12" md="5">
             <Nav></Nav>
           </v-col>
         </v-row>
@@ -31,9 +31,3 @@ export default {
   components: { TopBar, Footer, Nav }
 }
 </script>
-
-<style scoped>
-.main {
-  min-width: 1080px;
-}
-</style>

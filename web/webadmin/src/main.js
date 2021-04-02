@@ -5,6 +5,7 @@ import router from './router'
 import './plugin/http'
 import './plugin/antui'
 import './assets/css/style.css'
+import './assets/css/prism.css'
 
 Vue.config.productionTip = false
 

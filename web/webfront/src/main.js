@@ -4,6 +4,7 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import './plugins/http'
 import moment from 'moment'
+import './assets/prism.css'
 
 Vue.config.productionTip = false
 

@@ -9,11 +9,13 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "compression-webpack-plugin": "1.1.12",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.4",
     "lib-flexible": "^0.3.2",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
+    "vue-multiple-message": "^1.1.0",
     "vue-router": "^3.2.0",
     "vuetify": "^2.2.11"
   },

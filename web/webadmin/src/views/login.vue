@@ -66,7 +66,7 @@ export default {
 <style scoped>
 .container {
     height: 100%;
-    background-image: url('../assets/br.jpg');
+    background-image: url('https://xx.mzqcgc.cn/br.jpg');
     background-repeat:no-repeat;
     background-size:100% 100%
 }

@@ -66,4 +66,5 @@ export default {
 
 <style>
 @import url('./skins/ui/oxide/skin.min.css');
+@import url('./skins/content/default/content.min.css');
 </style>

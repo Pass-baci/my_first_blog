@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import Prism from '../assets/prism'
 export default {
   props: ['id'],
   data () {
@@ -31,6 +32,9 @@ export default {
     async getArtInfo () {
       const { data: res } = await this.$http.get(`article/info/${this.id}`)
       this.artInfo = res.data
+      this.timer = setTimeout(() => {
+        Prism.highlightAll()
+      }, 0)
     }
   }
 }
@@ -42,5 +46,13 @@ export default {
 .content >>> img {
   width: auto;
   max-width: 100%;
+}
+.content >>> pre,
+code {
+  margin: 10px;
+  padding: 14px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
 }
 </style>
